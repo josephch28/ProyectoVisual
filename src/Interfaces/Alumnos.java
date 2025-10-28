@@ -278,6 +278,12 @@ public class Alumnos extends javax.swing.JInternalFrame {
             }
         });
 
+        jtxtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxtDireccionKeyTyped(evt);
+            }
+        });
+
         jtxtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jtxtTelefonoKeyTyped(evt);
@@ -501,6 +507,10 @@ public class Alumnos extends javax.swing.JInternalFrame {
             evt.consume();
         }
     }//GEN-LAST:event_jtxtApellidoKeyTyped
+
+    private void jtxtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtDireccionKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtDireccionKeyTyped
 
     /**
      * @param args the command line arguments
