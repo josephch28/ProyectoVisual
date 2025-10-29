@@ -4,7 +4,9 @@
  */
 package Interfaces;
 import java.sql.*;
+import javax.swing.JMenuItem;
 import java.awt.Component;
+import Interfaces.ReporteBarras;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +17,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
+
 
 /**
  *
@@ -32,10 +35,13 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(this.MAXIMIZED_BOTH);
         aplicarPermisosRol();
+        jmniReporteBarras = new javax.swing.JMenuItem("Gráfico de barras (JFreeChart)");
+        jmniReporteBarras.addActionListener(evt -> abrirReporteBarras());
+        jmnuReportes.add(jmniReporteBarras);
     }
     
     public void aplicarPermisosRol(){
-        if (this.rol=="secretaria") {
+        if ("secretaria".equalsIgnoreCase(this.rol)) {
             jmnuReportes.setEnabled(false);
         }
     }
@@ -159,7 +165,35 @@ public class Principal extends javax.swing.JFrame {
         jdskPrincipal.add(r1);
         r1.setVisible(true);
     }//GEN-LAST:event_jmniEstudiantexCedulaActionPerformed
+        private void abrirReporteBarras() {
+        // Si ya está abierto, lo traemos al frente
+        JInternalFrame abierto = buscarFrameAbierto(ReporteBarras.class);
+        if (abierto != null) {
+            try {
+                abierto.setSelected(true);
+                abierto.toFront();
+            } catch (Exception ignored) {}
+            return;
+        }
 
+        // Si no está abierto, lo creamos y agregamos
+        ReporteBarras r = new ReporteBarras();  // tu clase existente, sin tocarla
+        jdskPrincipal.add(r);
+        r.setVisible(true);
+        try {
+            r.setSelected(true);
+        } catch (Exception ignored) {}
+    }
+            private JInternalFrame buscarFrameAbierto(Class<? extends JInternalFrame> tipo) {
+        for (JInternalFrame f : jdskPrincipal.getAllFrames()) {
+            if (tipo.isInstance(f)) {
+                return f;
+            }
+        }
+        return null;
+    }
+
+    
     /**
      * @param args the command line arguments
      */
@@ -205,4 +239,5 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jmnuSalir;
     private javax.swing.JMenu jmnuVentanas;
     // End of variables declaration//GEN-END:variables
+    private javax.swing.JMenuItem jmniReporteBarras;
 }
