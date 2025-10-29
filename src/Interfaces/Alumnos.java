@@ -90,41 +90,90 @@ public class Alumnos extends javax.swing.JInternalFrame {
     
     
     public void guardarEstudiante(){
-        if (jtxtCedula.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "La cédula es obligatoria");
-            jtxtCedula.requestFocus();
-        }
-        else if (jtxtNombre.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El nombre es obligatorio");
-            jtxtNombre.requestFocus();
-        }
-        else if (jtxtApellido.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El apellido es obligatorio");
-            jtxtApellido.requestFocus();
-        }
-        else{
-        Conexion cn = new Conexion();
-        Connection cc = cn.conectar();
-        String SqlInsert = "INSERT INTO ESTUDIANTES VALUES(?,?,?,?,?);";
-        try {
-            PreparedStatement stmt = cc.prepareStatement(SqlInsert);
-            stmt.setString(1, jtxtCedula.getText());
-            stmt.setString(2, jtxtNombre.getText());
-            stmt.setString(3, jtxtApellido.getText());
-            stmt.setString(4, (jtxtDireccion.getText().trim().isEmpty())?"Sin Dirección":jtxtDireccion.getText());
-            stmt.setString(5, (jtxtTelefono.getText().trim().isEmpty())?"S/T":jtxtTelefono.getText());
-            int n=stmt.executeUpdate();
-            if (n>0) {
-                JOptionPane.showMessageDialog(this, "Estudiante Insertado");
-                mostrarEstudiantes();
-                botonesInicio();
-                TextosInicio();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
-        }
+    
+    
+    if (jtxtCedula.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "La cédula es obligatoria");
+        jtxtCedula.requestFocus();
+        return;
     }
+    else if (jtxtCedula.getText().length() != 10) {
+        JOptionPane.showMessageDialog(this, "La cédula debe tener exactamente 10 caracteres");
+        jtxtCedula.requestFocus();
+        jtxtCedula.selectAll();
+        return;
+    }
+    
+    
+    if (jtxtNombre.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "El nombre es obligatorio");
+        jtxtNombre.requestFocus();
+        return;
+    }
+    else if (jtxtNombre.getText().length() > 20) {
+        JOptionPane.showMessageDialog(this, 
+            "Nombre muy largo: " + jtxtNombre.getText().length() + "/20 caracteres");
+        jtxtNombre.requestFocus();
+        jtxtNombre.selectAll();
+        return;
+    }
+    
+    
+    if (jtxtApellido.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "El apellido es obligatorio");
+        jtxtApellido.requestFocus();
+        return;
+    }
+    else if (jtxtApellido.getText().length() > 20) {
+        JOptionPane.showMessageDialog(this, 
+            "Apellido muy largo: " + jtxtApellido.getText().length() + "/20 caracteres");
+        jtxtApellido.requestFocus();
+        jtxtApellido.selectAll();
+        return;
+    }
+    
+    
+    if (!jtxtDireccion.getText().isEmpty() && jtxtDireccion.getText().length() > 100) {
+        JOptionPane.showMessageDialog(this, 
+            "Dirección muy larga: " + jtxtDireccion.getText().length() + "/100 caracteres");
+        jtxtDireccion.requestFocus();
+        jtxtDireccion.selectAll();
+        return;
+    }
+    
+    
+    if (!jtxtTelefono.getText().isEmpty() && jtxtTelefono.getText().length() > 15) {
+        JOptionPane.showMessageDialog(this, 
+            "Teléfono muy largo: " + jtxtTelefono.getText().length() + "/15 caracteres");
+        jtxtTelefono.requestFocus();
+        jtxtTelefono.selectAll();
+        return;
+    }
+
+    
+    Conexion cn = new Conexion();
+    Connection cc = cn.conectar();
+    String SqlInsert = "INSERT INTO ESTUDIANTES VALUES(?,?,?,?,?);";
+    try {
+        PreparedStatement stmt = cc.prepareStatement(SqlInsert);
+        stmt.setString(1, jtxtCedula.getText());
+        stmt.setString(2, jtxtNombre.getText());
+        stmt.setString(3, jtxtApellido.getText());
+        stmt.setString(4, (jtxtDireccion.getText().trim().isEmpty())?"Sin Dirección":jtxtDireccion.getText());
+        stmt.setString(5, (jtxtTelefono.getText().trim().isEmpty())?"S/T":jtxtTelefono.getText());
+        int n=stmt.executeUpdate();
+        if (n>0) {
+            JOptionPane.showMessageDialog(this, "Estudiante Insertado");
+            mostrarEstudiantes();
+            botonesInicio();
+            TextosInicio();
+        }
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage());
+    }
+}
+    
+
     
     public void mostrarEstudiantes(){
         String[] titulos = {"Cédula","Nombre","Apellido","Dirección","Teléfono"};
@@ -152,44 +201,119 @@ public class Alumnos extends javax.swing.JInternalFrame {
     }
     
     public void editarEstudiante(){
-        try {
-            Conexion cn = new Conexion();
-            Connection cc = cn.conectar();
-            String SqlUpdate = "UPDATE Estudiantes SET estnombre='"+jtxtNombre.getText()+"'"
-                    + ", estapellido ='"+jtxtApellido.getText()+"', estdireccion='"+jtxtDireccion.getText()
-                    +"', esttelefono='"+jtxtTelefono.getText()+"' WHERE estcedula = '"+jtxtCedula.getText()+"'";
-            PreparedStatement pdst = cc.prepareStatement(SqlUpdate);
-            if(pdst.executeUpdate()>0){
-                JOptionPane.showMessageDialog(this, "Se actualizó el Estudiante");
-                mostrarEstudiantes();   
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+    try {
+        // Primero validar que la cédula no esté vacía
+        if (jtxtCedula.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La cédula es obligatoria para editar");
+            jtxtCedula.requestFocus();
+            return;
         }
         
+        Conexion cn = new Conexion();
+        Connection cc = cn.conectar();
+        
+        // 1. VERIFICAR SI LA CÉDULA EXISTE EN LA BD
+        String sqlVerificar = "SELECT COUNT(*) FROM estudiantes WHERE estcedula = ?";
+        PreparedStatement stmtVerificar = cc.prepareStatement(sqlVerificar);
+        stmtVerificar.setString(1, jtxtCedula.getText());
+        
+        ResultSet rs = stmtVerificar.executeQuery();
+        rs.next();
+        int existe = rs.getInt(1);
+        
+        // Si no existe, mostrar error y salir
+        if (existe == 0) {
+            JOptionPane.showMessageDialog(this, 
+                "La cédula " + jtxtCedula.getText() + " no existe en la base de datos\n" +
+                "No se puede editar un estudiante que no existe");
+            jtxtCedula.requestFocus();
+            
+            return;
+        }
+        
+        // 2. Si existe, proceder con la actualización
+        String SqlUpdate = "UPDATE Estudiantes SET estnombre=?, estapellido=?, estdireccion=?, esttelefono=? WHERE estcedula=?";
+        
+        PreparedStatement pdst = cc.prepareStatement(SqlUpdate);
+        pdst.setString(1, jtxtNombre.getText());
+        pdst.setString(2, jtxtApellido.getText());
+        pdst.setString(3, jtxtDireccion.getText());
+        pdst.setString(4, jtxtTelefono.getText());
+        pdst.setString(5, jtxtCedula.getText());
+        
+        int filasAfectadas = pdst.executeUpdate();
+        if(filasAfectadas > 0){
+            JOptionPane.showMessageDialog(this, "Se actualizó el Estudiante correctamente");
+            mostrarEstudiantes();   
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo actualizar el estudiante");
+        }
+        
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error al editar: " + ex.getMessage());
     }
+}
     
     public void eliminarEstudiante(){
-        try {
-            if (JOptionPane.showConfirmDialog(this, 
-                    "¿Está seguro de eliminar el estudiante?",
-                    "Borrar Estudiante",
-                    JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION) {
-            Conexion cn = new Conexion();
-            Connection cc = cn.conectar();
-            String SqlDelete = "DELETE FROM Estudiantes WHERE estcedula = '"+jtxtCedula.getText()+"'";
-            PreparedStatement psd = cc.prepareStatement(SqlDelete);
-            int n = psd.executeUpdate();
-            if (n>0) {
-                JOptionPane.showMessageDialog(this, "Se eliiminó correctamente");
-                mostrarEstudiantes();
-            }
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+    try {
+        // Primero validar que la cédula no esté vacía
+        if (jtxtCedula.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La cédula es obligatoria para eliminar");
+            jtxtCedula.requestFocus();
+            return;
         }
         
+        // Verificar si el estudiante existe antes de mostrar confirmación
+        Conexion cn = new Conexion();
+        Connection cc = cn.conectar();
+        
+        // 1. VERIFICAR SI LA CÉDULA EXISTE EN LA BD
+        String sqlVerificar = "SELECT estnombre, estapellido FROM estudiantes WHERE estcedula = ?";
+        PreparedStatement stmtVerificar = cc.prepareStatement(sqlVerificar);
+        stmtVerificar.setString(1, jtxtCedula.getText());
+        
+        ResultSet rs = stmtVerificar.executeQuery();
+        
+        // Si no existe, mostrar error y salir
+        if (!rs.next()) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: La cédula " + jtxtCedula.getText() + " no existe\n" +
+                "No se puede eliminar un estudiante que no está registrado");
+            jtxtCedula.requestFocus();
+            jtxtCedula.selectAll();
+            return;
+        }
+        
+        // Obtener nombre del estudiante para el mensaje de confirmación
+        String nombreEstudiante = rs.getString("estnombre") + " " + rs.getString("estapellido");
+        
+        // 2. Mostrar confirmación con el nombre del estudiante
+        if (JOptionPane.showConfirmDialog(this, 
+                "¿Está seguro de eliminar al estudiante:\n" +
+                nombreEstudiante + "\n" +
+                "Cédula: " + jtxtCedula.getText() + "?",
+                "Confirmar Eliminación",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
+            
+            // 3. Proceder con la eliminación (usando PreparedStatement seguro)
+            String SqlDelete = "DELETE FROM Estudiantes WHERE estcedula = ?";
+            PreparedStatement psd = cc.prepareStatement(SqlDelete);
+            psd.setString(1, jtxtCedula.getText());
+            
+            int n = psd.executeUpdate();
+            if (n > 0) {
+                JOptionPane.showMessageDialog(this, 
+                    "Estudiante " + nombreEstudiante + " eliminado correctamente");
+                mostrarEstudiantes();
+                
+            }
+        }
+        
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error al eliminar: " + ex.getMessage());
     }
+}
     
     public void cargarCamposTabla(){
         jtblAlumnos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
