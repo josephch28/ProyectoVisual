@@ -133,7 +133,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
     }
     
     
-    if (!jtxtDireccion.getText().isEmpty() && jtxtDireccion.getText().length() > 100) {
+    if (!jtxtDireccion.getText().isEmpty() && jtxtDireccion.getText().length() > 50) {
         JOptionPane.showMessageDialog(this, 
             "Dirección muy larga: " + jtxtDireccion.getText().length() + "/100 caracteres");
         jtxtDireccion.requestFocus();
@@ -142,7 +142,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
     }
     
     
-    if (!jtxtTelefono.getText().isEmpty() && jtxtTelefono.getText().length() > 15) {
+    if (!jtxtTelefono.getText().isEmpty() && jtxtTelefono.getText().length() > 10) {
         JOptionPane.showMessageDialog(this, 
             "Teléfono muy largo: " + jtxtTelefono.getText().length() + "/15 caracteres");
         jtxtTelefono.requestFocus();
