@@ -25,6 +25,8 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         escalarIconoExistente();
+        configurarCampos();
+        getRootPane().setDefaultButton(btnLogin);
     }
     private void escalarIconoExistente() {
         // Obtiene el ImageIcon actual
@@ -45,6 +47,48 @@ public class Login extends javax.swing.JFrame {
             lblImagen.setIcon(new ImageIcon(imagenEscalada));
         }
     }
+    
+    private void configurarCampos() {
+    // --- Campo Usuario ---
+    txtUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
+        @Override
+        public void focusGained(java.awt.event.FocusEvent evt) {
+            if (txtUsuario.getText().equals("Usuario")) {
+                txtUsuario.setText("");
+                txtUsuario.setForeground(new java.awt.Color(0, 0, 0)); // texto negro
+            }
+        }
+
+        @Override
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            if (txtUsuario.getText().trim().isEmpty()) {
+                txtUsuario.setText("Usuario");
+                txtUsuario.setForeground(new java.awt.Color(102, 102, 102)); // gris
+            }
+        }
+    });
+
+    // --- Campo Password ---
+    txtPassword.addFocusListener(new java.awt.event.FocusAdapter() {
+        @Override
+        public void focusGained(java.awt.event.FocusEvent evt) {
+            String contrasena = new String(txtPassword.getPassword());
+            if (contrasena.equals("*******")) {
+                txtPassword.setText("");
+                txtPassword.setForeground(new java.awt.Color(0, 0, 0));
+            }
+        }
+
+        @Override
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            String contrasena = new String(txtPassword.getPassword());
+            if (contrasena.trim().isEmpty()) {
+                txtPassword.setText("*******");
+                txtPassword.setForeground(new java.awt.Color(102, 102, 102));
+            }
+        }
+    });
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
