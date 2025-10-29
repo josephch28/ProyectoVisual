@@ -376,6 +376,11 @@ public class Alumnos extends javax.swing.JInternalFrame {
         });
 
         jbtnCancelar.setText("Cancelar");
+        jbtnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -458,10 +463,16 @@ public class Alumnos extends javax.swing.JInternalFrame {
 
     private void jbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEliminarActionPerformed
         eliminarEstudiante();
+        botonesInicio();
+        TextosInicio();
+        jtblAlumnos.clearSelection();
     }//GEN-LAST:event_jbtnEliminarActionPerformed
 
     private void jbtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEditarActionPerformed
         editarEstudiante();
+        botonesInicio();
+        TextosInicio();
+        jtblAlumnos.clearSelection();
     }//GEN-LAST:event_jbtnEditarActionPerformed
 
     private void jbtnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnNuevoActionPerformed
@@ -511,6 +522,13 @@ public class Alumnos extends javax.swing.JInternalFrame {
     private void jtxtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtDireccionKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_jtxtDireccionKeyTyped
+
+    private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
+        // TODO add your handling code here:
+        botonesInicio();
+        TextosInicio();
+        jtblAlumnos.clearSelection();
+    }//GEN-LAST:event_jbtnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
