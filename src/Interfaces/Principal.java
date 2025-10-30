@@ -63,6 +63,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jmnuVentanas = new javax.swing.JMenu();
         jmntEstudiantes = new javax.swing.JMenuItem();
+        jmntMatriculas = new javax.swing.JMenuItem();
         jmnuReportes = new javax.swing.JMenu();
         jmniReporteEstudiantes = new javax.swing.JMenuItem();
         jmniEstudiantexCedula = new javax.swing.JMenuItem();
@@ -90,6 +91,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jmnuVentanas.add(jmntEstudiantes);
+
+        jmntMatriculas.setText("Matriculas");
+        jmntMatriculas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmntMatriculasActionPerformed(evt);
+            }
+        });
+        jmnuVentanas.add(jmntMatriculas);
 
         jMenuBar1.add(jmnuVentanas);
 
@@ -165,6 +174,20 @@ public class Principal extends javax.swing.JFrame {
         jdskPrincipal.add(r1);
         r1.setVisible(true);
     }//GEN-LAST:event_jmniEstudiantexCedulaActionPerformed
+
+    private void jmntMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmntMatriculasActionPerformed
+        Matriculas frm = Matriculas.getInstancia();
+        if (!frm.isVisible()) {
+            jdskPrincipal.add(frm);
+            frm.setVisible(true);
+            } else {
+            try {
+                frm.setSelected(true); // Lo trae al frente si ya está abierto
+            } catch (java.beans.PropertyVetoException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jmntMatriculasActionPerformed
         private void abrirReporteBarras() {
         // Si ya está abierto, lo traemos al frente
         JInternalFrame abierto = buscarFrameAbierto(ReporteBarras.class);
@@ -235,6 +258,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmniEstudiantexCedula;
     private javax.swing.JMenuItem jmniReporteEstudiantes;
     private javax.swing.JMenuItem jmntEstudiantes;
+    private javax.swing.JMenuItem jmntMatriculas;
     private javax.swing.JMenu jmnuReportes;
     private javax.swing.JMenu jmnuSalir;
     private javax.swing.JMenu jmnuVentanas;
