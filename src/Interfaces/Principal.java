@@ -11,6 +11,8 @@ import Interfaces.ReporteBarras;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
@@ -21,6 +23,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JRViewer;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
@@ -191,7 +194,6 @@ public class Principal extends javax.swing.JFrame {
             Conexion cc = new Conexion();
             Connection cn = cc.conectar();
 
-            // En lugar de compilar el .jrxml, carga el .jasper ya compilado
             InputStream archivo = getClass().getResourceAsStream("/Reportes/ReporteTodosEstudiantes.jasper");
 
             if (archivo == null) {
@@ -201,10 +203,27 @@ public class Principal extends javax.swing.JFrame {
                 return;
             }
 
-            // Cargar reporte ya compilado
             JasperReport reporte = (JasperReport) JRLoader.loadObject(archivo);
             JasperPrint imprimir = JasperFillManager.fillReport(reporte, null, cn);
-            JasperViewer.viewReport(imprimir, false);
+
+            // CREAR UN JINTERNALFRAME PARA MOSTRAR EL REPORTE DENTRO
+            JInternalFrame iframe = new JInternalFrame("Reporte de Estudiantes", true, true, true, true);
+
+            // Crear el visor del reporte
+            JRViewer viewer = new JRViewer(imprimir);
+            iframe.getContentPane().add(viewer);
+
+            // Configurar tamaño y agregar al desktop
+            iframe.setSize(800, 600);
+            jdskPrincipal.add(iframe);
+            iframe.setVisible(true);
+            iframe.setMaximizable(true);
+
+            try {
+                iframe.setMaximum(true); // Maximizar dentro del desktop
+            } catch (Exception e) {
+                // Ignorar si no se puede maximizar
+            }
 
             archivo.close();
             cn.close();
@@ -216,9 +235,24 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmniReporteEstudiantesActionPerformed
 
     private void jmniEstudiantexCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmniEstudiantexCedulaActionPerformed
-        ReporteCedula r1 = new ReporteCedula();
-        jdskPrincipal.add(r1);
-        r1.setVisible(true);
+        JInternalFrame abierto = buscarFrameAbierto(ReporteCedula.class);
+        if (abierto != null) {
+            try {
+                abierto.setSelected(true);
+                abierto.toFront();
+            } catch (Exception ignored) {
+            }
+            return;
+        }
+
+        // Si no está abierto, crear y agregar
+        ReporteCedula frm = new ReporteCedula();
+        jdskPrincipal.add(frm);
+        frm.setVisible(true);
+        try {
+            frm.setSelected(true);
+        } catch (Exception ignored) {
+        }
     }//GEN-LAST:event_jmniEstudiantexCedulaActionPerformed
 
     private void jmntMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmntMatriculasActionPerformed

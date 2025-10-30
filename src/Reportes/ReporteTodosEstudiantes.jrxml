@@ -12,8 +12,7 @@
 FROM matriculas m
 JOIN estudiantes e ON TRIM(e.estcedula) = m.estudiante
 JOIN cursos c      ON c.curid = m.curso
-ORDER BY e.estapellido, e.estnombre;
-]]>
+ORDER BY e.estapellido, e.estnombre;]]>
 	</queryString>
 	<field name="estcedula" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
