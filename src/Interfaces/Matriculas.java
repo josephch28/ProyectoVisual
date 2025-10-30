@@ -35,6 +35,35 @@ public class Matriculas extends javax.swing.JFrame {
         return instancia;
     }
     
+    public void mostrarMatriculas() {
+    String[] titulos = {"ID", "Estudiante", "Curso"};
+    String registros[] = new String[3];
+    modelo = new DefaultTableModel(null, titulos);
+    Conexion cn = new Conexion();
+    Connection cc = cn.conectar();
+
+    String SqlSelect = """
+        SELECT m.id, e.estcedula, c.curnombre
+        FROM matriculas m
+        INNER JOIN estudiantes e ON m.estudiante = e.estcedula
+        INNER JOIN cursos c ON m.curso = c.curid;
+        """;
+
+    try {
+        Statement stmt = cc.createStatement();
+        ResultSet rs = stmt.executeQuery(SqlSelect);
+        while (rs.next()) {
+            registros[0] = rs.getString("id");
+            registros[1] = rs.getString("estcedula");
+            registros[2] = rs.getString("curnombre");
+            modelo.addRow(registros);
+        }
+        jtblMatriculas.setModel(modelo);
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error al mostrar matrículas: " + ex.getMessage());
+    }
+}
+    
     public void cargarEstudiantes() {
         Conexion cn = new Conexion();
         Connection cc = cn.conectar();
@@ -43,6 +72,7 @@ public class Matriculas extends javax.swing.JFrame {
             PreparedStatement ps = cc.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             cbxEstudiantes.removeAllItems();
+            cbxEstudiantes.addItem("Seleccione un estudiante");
             while (rs.next()) {
                 cbxEstudiantes.addItem(rs.getString("estcedula"));
             }
@@ -55,41 +85,71 @@ public class Matriculas extends javax.swing.JFrame {
         Conexion cn = new Conexion();
         Connection cc = cn.conectar();
         try {
-            String sql = "SELECT curnombre FROM cursos";
+            String sql = "SELECT curid, curnombre FROM cursos";
             PreparedStatement ps = cc.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             cbxCursos.removeAllItems();
+            cbxCursos.addItem("Seleccione un curso");
             while (rs.next()) {
-                cbxCursos.addItem(rs.getString("curnombre"));
+                cbxCursos.addItem(rs.getInt("curid") + " - " + rs.getString("curnombre"));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al cargar cursos: " + e.getMessage());
         }
     }
     
-    public void mostrarMatriculas() {
-        String[] titulos = {"ID", "Estudiante", "Curso"};
-        String registros[] = new String[3];
-        modelo = new DefaultTableModel(null, titulos);
+    public void matricularEstudiante() {
+        String estudiante = (String) cbxEstudiantes.getSelectedItem();
+        String cursoStr = (String) cbxCursos.getSelectedItem();
+
+        if (estudiante == null || estudiante.equals("Seleccione un estudiante")) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un estudiante.");
+            return;
+        }
+        if (cursoStr == null || cursoStr.equals("Seleccione un curso")) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un curso.");
+            return;
+        }
+
+        int cursoId;
+        try {
+            cursoId = Integer.parseInt(cursoStr.split(" - ")[0]);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al obtener el ID del curso.");
+            return;
+        }
+
         Conexion cn = new Conexion();
         Connection cc = cn.conectar();
-        String SqlSelect = "SELECT * FROM matriculas;";
+
         try {
-            Statement stmt = cc.createStatement();
-            ResultSet rs = stmt.executeQuery(SqlSelect);
-            while (rs.next()) {
-                registros[0] = rs.getString(1);
-                registros[1] = rs.getString(2);
-                registros[2] = rs.getString(3);
-                modelo.addRow(registros);
+            String sqlCheck = "SELECT COUNT(*) FROM matriculas WHERE estudiante = ? AND curso = ?";
+            PreparedStatement psCheck = cc.prepareStatement(sqlCheck);
+            psCheck.setString(1, estudiante);
+            psCheck.setInt(2, cursoId);
+            ResultSet rs = psCheck.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                JOptionPane.showMessageDialog(this, "El estudiante ya está matriculado en este curso.");
+                return;
             }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+
+            String sqlInsert = "INSERT INTO matriculas (estudiante, curso) VALUES (?, ?)";
+            PreparedStatement psInsert = cc.prepareStatement(sqlInsert);
+            psInsert.setString(1, estudiante);
+            psInsert.setInt(2, cursoId);
+            int n = psInsert.executeUpdate();
+
+            if (n > 0) {
+                JOptionPane.showMessageDialog(this, "Matrícula registrada correctamente.");
+                mostrarMatriculas();
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo registrar la matrícula.");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al matricular: " + ex.getMessage());
         }
-        jtblMatriculas.setModel(modelo);
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -106,6 +166,7 @@ public class Matriculas extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         cbxEstudiantes = new javax.swing.JComboBox<>();
         cbxCursos = new javax.swing.JComboBox<>();
+        jbtnMatricular = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtblMatriculas = new javax.swing.JTable();
@@ -125,6 +186,13 @@ public class Matriculas extends javax.swing.JFrame {
 
         cbxCursos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jbtnMatricular.setText("Matricular");
+        jbtnMatricular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnMatricularActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -137,25 +205,32 @@ public class Matriculas extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
-                        .addComponent(cbxCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(83, Short.MAX_VALUE))
+                        .addComponent(cbxCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jbtnMatricular)))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(cbxEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(cbxEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jbtnMatricular)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(cbxCursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -212,11 +287,15 @@ public class Matriculas extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbtnMatricularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnMatricularActionPerformed
+        matricularEstudiante();
+    }//GEN-LAST:event_jbtnMatricularActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,6 +341,7 @@ public class Matriculas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbtnMatricular;
     private javax.swing.JTable jtblMatriculas;
     // End of variables declaration//GEN-END:variables
 }
