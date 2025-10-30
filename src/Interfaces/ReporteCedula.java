@@ -32,6 +32,7 @@ public class ReporteCedula extends javax.swing.JInternalFrame {
      */
     public ReporteCedula() {
         initComponents();
+        setClosable(true);
     }
 
     /**

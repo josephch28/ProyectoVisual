@@ -24,6 +24,7 @@ public class AgregarUsuario extends javax.swing.JInternalFrame {
      */
     public AgregarUsuario() {
         initComponents();
+        setClosable(true);
     }
     
     public static AgregarUsuario getInstancia() {

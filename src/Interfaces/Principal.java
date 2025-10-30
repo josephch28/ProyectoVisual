@@ -74,6 +74,7 @@ public class Principal extends javax.swing.JFrame {
         jmnuVentanas = new javax.swing.JMenu();
         jmntEstudiantes = new javax.swing.JMenuItem();
         jmntMatriculas = new javax.swing.JMenuItem();
+        jmntCursos = new javax.swing.JMenuItem();
         jmnuReportes = new javax.swing.JMenu();
         jmniReporteEstudiantes = new javax.swing.JMenuItem();
         jmniEstudiantexCedula = new javax.swing.JMenuItem();
@@ -96,6 +97,8 @@ public class Principal extends javax.swing.JFrame {
 
         jmnuVentanas.setText("Ventanas");
 
+        jmntEstudiantes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmntEstudiantes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/graduado.png"))); // NOI18N
         jmntEstudiantes.setText("Estudiantes");
         jmntEstudiantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,6 +107,8 @@ public class Principal extends javax.swing.JFrame {
         });
         jmnuVentanas.add(jmntEstudiantes);
 
+        jmntMatriculas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmntMatriculas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/matricula.png"))); // NOI18N
         jmntMatriculas.setText("Matriculas");
         jmntMatriculas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,6 +116,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jmnuVentanas.add(jmntMatriculas);
+
+        jmntCursos.setText("Cursos");
+        jmntCursos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmntCursosActionPerformed(evt);
+            }
+        });
+        jmnuVentanas.add(jmntCursos);
 
         jMenuBar1.add(jmnuVentanas);
 
@@ -277,7 +290,7 @@ public class Principal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jmntMatriculasActionPerformed
-    private void jmnuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnuSalirActionPerformed
+     private void jmnuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnuSalirActionPerformed
         
     }//GEN-LAST:event_jmnuSalirActionPerformed
 
@@ -293,19 +306,28 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jmnuSalirMouseClicked
 
-    private void jmniAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmniAgregarUsuarioActionPerformed
+    private void jmniAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         AgregarUsuario frm = AgregarUsuario.getInstancia();
         if (!frm.isVisible()) {
             jdskPrincipal.add(frm);
             frm.setVisible(true);
+        }
+    }
+
+    private void jmntCursosActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        // TODO add your handling code here:
+        Cursos frmCursos = Cursos.getInstancia();
+        if (!frmCursos.isVisible()) {
+            jdskPrincipal.add(frmCursos);
+            frmCursos.setVisible(true);
             } else {
             try {
-                frm.setSelected(true); // Lo trae al frente si ya está abierto
+                frmCursos.setSelected(true); // Lo trae al frente si ya está abierto
             } catch (java.beans.PropertyVetoException ex) {
                 ex.printStackTrace();
             }
         }
-    }//GEN-LAST:event_jmniAgregarUsuarioActionPerformed
+    }                                                  
         private void abrirReporteBarras() {
         // Si ya está abierto, lo traemos al frente
         JInternalFrame abierto = buscarFrameAbierto(ReporteBarras.class);
@@ -397,6 +419,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmniAgregarUsuario;
     private javax.swing.JMenuItem jmniEstudiantexCedula;
     private javax.swing.JMenuItem jmniReporteEstudiantes;
+    private javax.swing.JMenuItem jmntCursos;
     private javax.swing.JMenuItem jmntEstudiantes;
     private javax.swing.JMenuItem jmntMatriculas;
     private javax.swing.JMenu jmnuReportes;
