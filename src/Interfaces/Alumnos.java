@@ -104,80 +104,94 @@ public class Alumnos extends javax.swing.JInternalFrame {
         buttonGroup1.clearSelection();
     }
 
-    public void guardarEstudiante() {
-
-        if (jtxtCedula.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "La cédula es obligatoria");
-            jtxtCedula.requestFocus();
-            return;
-        } else if (jtxtCedula.getText().length() != 10) {
-            JOptionPane.showMessageDialog(this, "La cédula debe tener exactamente 10 caracteres");
-            jtxtCedula.requestFocus();
-            jtxtCedula.selectAll();
-            return;
-        }
-
-        if (jtxtNombre.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El nombre es obligatorio");
-            jtxtNombre.requestFocus();
-            return;
-        } else if (jtxtNombre.getText().length() > 20) {
-            JOptionPane.showMessageDialog(this,
-                    "Nombre ingresado es excede los 20 caracteres ");
-            jtxtNombre.requestFocus();
-            jtxtNombre.selectAll();
-            return;
-        }
-
-        if (jtxtApellido.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El apellido es obligatorio");
-            jtxtApellido.requestFocus();
-            return;
-        } else if (jtxtApellido.getText().length() > 20) {
-            JOptionPane.showMessageDialog(this,
-                    "Apellido ingresado es excede los 20 caracteres ");
-            jtxtApellido.requestFocus();
-            jtxtApellido.selectAll();
-            return;
-        }
-
-        if (jtxtDireccion.getText().length() > 50) {
-            JOptionPane.showMessageDialog(this,
-                    "Dirección muy larga excede los 50 caracteres  contando espacios ");
-            jtxtDireccion.requestFocus();
-            jtxtDireccion.selectAll();
-            return;
-        }
-
-        if (jtxtTelefono.getText().length() > 10) {
-            JOptionPane.showMessageDialog(this,
-                    "Teléfono excede lo que esta en las base de datos ");
-            jtxtTelefono.requestFocus();
-            jtxtTelefono.selectAll();
-            return;
-        }
-
-        Conexion cn = new Conexion();
-        Connection cc = cn.conectar();
-        String SqlInsert = "INSERT INTO ESTUDIANTES VALUES(?,?,?,?,?);";
-        try {
-            PreparedStatement stmt = cc.prepareStatement(SqlInsert);
-            stmt.setString(1, jtxtCedula.getText());
-            stmt.setString(2, jtxtNombre.getText());
-            stmt.setString(3, jtxtApellido.getText());
-            stmt.setString(4, (jtxtDireccion.getText().trim().isEmpty()) ? "Sin Dirección" : jtxtDireccion.getText());
-            stmt.setString(5, (jtxtTelefono.getText().trim().isEmpty()) ? "S/T" : jtxtTelefono.getText());
-            int n = stmt.executeUpdate();
-            if (n > 0) {
-                JOptionPane.showMessageDialog(this, "Estudiante Insertado");
-                mostrarEstudiantes();
-                botonesInicio();
-                TextosInicio();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
+  public void guardarEstudiante() {
+    
+    if (jtxtCedula.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "La cédula es obligatoria");
+        jtxtCedula.requestFocus();
+        return;
+    } else if (jtxtCedula.getText().length() != 10) {
+        JOptionPane.showMessageDialog(this, "La cédula debe tener exactamente 10 caracteres");
+        jtxtCedula.requestFocus();
+        jtxtCedula.selectAll();
+        return;
     }
+
+    if (jtxtNombre.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "El nombre es obligatorio");
+        jtxtNombre.requestFocus();
+        return;
+    } else if (jtxtNombre.getText().length() > 20) {
+        JOptionPane.showMessageDialog(this,
+                "Nombre ingresado es excede los 20 caracteres ");
+        jtxtNombre.requestFocus();
+        jtxtNombre.selectAll();
+        return;
+    }
+
+    if (jtxtApellido.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "El apellido es obligatorio");
+        jtxtApellido.requestFocus();
+        return;
+    } else if (jtxtApellido.getText().length() > 20) {
+        JOptionPane.showMessageDialog(this,
+                "Apellido ingresado es excede los 20 caracteres ");
+        jtxtApellido.requestFocus();
+        jtxtApellido.selectAll();
+        return;
+    }
+
+    if (jtxtDireccion.getText().length() > 50) {
+        JOptionPane.showMessageDialog(this,
+                "Dirección muy larga excede los 50 caracteres  contando espacios ");
+        jtxtDireccion.requestFocus();
+        jtxtDireccion.selectAll();
+        return;
+    }
+
+    if (jtxtTelefono.getText().length() > 10) {
+        JOptionPane.showMessageDialog(this,
+                "Teléfono excede lo que esta en las base de datos ");
+        jtxtTelefono.requestFocus();
+        jtxtTelefono.selectAll();
+        return;
+    }
+
+    
+    String sexo = "";
+    if (jrdbF.isSelected()) {
+        sexo = "F";
+    } else if (jrdbM.isSelected()) {
+        sexo = "M";
+    } else {
+        JOptionPane.showMessageDialog(this, "Seleccione el sexo");
+        return;
+    }
+
+    Conexion cn = new Conexion();
+    Connection cc = cn.conectar();
+    // MODIFICAR EL INSERT PARA INCLUIR EL SEXO (6to campo)
+    String SqlInsert = "INSERT INTO ESTUDIANTES VALUES(?,?,?,?,?,?);";
+    try {
+        PreparedStatement stmt = cc.prepareStatement(SqlInsert);
+        stmt.setString(1, jtxtCedula.getText());
+        stmt.setString(2, jtxtNombre.getText());
+        stmt.setString(3, jtxtApellido.getText());
+        stmt.setString(4, (jtxtDireccion.getText().trim().isEmpty()) ? "Sin Dirección" : jtxtDireccion.getText());
+        stmt.setString(5, (jtxtTelefono.getText().trim().isEmpty()) ? "S/T" : jtxtTelefono.getText());
+        stmt.setString(6, sexo);  // AQUÍ SE GUARDA EL VALOR DEL RADIO BUTTON
+        
+        int n = stmt.executeUpdate();
+        if (n > 0) {
+            JOptionPane.showMessageDialog(this, "Estudiante Insertado");
+            mostrarEstudiantes();
+            botonesInicio();
+            TextosInicio();
+        }
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage());
+    }
+}
 
     public void mostrarEstudiantes() {
         String[] titulos = {"Cédula", "Nombre", "Apellido", "Dirección", "Teléfono", "Sexo"};
@@ -465,6 +479,8 @@ public class Alumnos extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Sexo:");
 
+        jrdbM.setModel(M);
+        buttonGroup1.add(jrdbM);
         jrdbM.setText("M");
         jrdbM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -472,6 +488,8 @@ public class Alumnos extends javax.swing.JInternalFrame {
             }
         });
 
+        jrdbF.setModel(F);
+        buttonGroup1.add(jrdbF);
         jrdbF.setText("F");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
