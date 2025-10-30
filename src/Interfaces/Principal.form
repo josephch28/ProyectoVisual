@@ -39,6 +39,12 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmntCursos">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+S"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagenes/curso-online.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Cursos"/>
               </Properties>
               <Events>

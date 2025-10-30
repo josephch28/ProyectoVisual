@@ -46,7 +46,8 @@ public class ReporteCedula extends javax.swing.JInternalFrame {
         jtxtCedula = new javax.swing.JTextField();
         jbtnReporte = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Buscar por Cédula:");
 
