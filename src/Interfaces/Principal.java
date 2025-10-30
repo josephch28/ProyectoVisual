@@ -42,10 +42,19 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(this.MAXIMIZED_BOTH);
         aplicarPermisosRol();
-        jmniReporteBarras = new javax.swing.JMenuItem("Gráfico de barras de comparraciones de curso");
+        /* jmniReporteBarras = new javax.swing.JMenuItem("Gráfico de barras de comparraciones de curso");
         jmniReporteBarras.addActionListener(evt -> abrirReporteBarras());
-        jmnuReportes.add(jmniReporteBarras);
+        jmnuReportes.add(jmniReporteBarras);*/
+        
         jmniBarrasGeneroPorCurso = new javax.swing.JMenuItem("Gráfico de Barras del Género por Curso");
+        jmniBarrasGeneroPorCurso.setIcon(new javax.swing.ImageIcon(
+            getClass().getResource("/imagenes/genero.png"))
+        );
+        jmniBarrasGeneroPorCurso.setAccelerator(
+            javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E,
+            java.awt.event.InputEvent.CTRL_DOWN_MASK | java.awt.event.InputEvent.SHIFT_DOWN_MASK)
+        );
+
         jmniBarrasGeneroPorCurso.addActionListener(evt -> abrirBarrasGeneroPorCurso());
         jmnuReportes.add(jmniBarrasGeneroPorCurso);
 
