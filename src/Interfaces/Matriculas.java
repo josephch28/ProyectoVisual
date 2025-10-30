@@ -23,6 +23,7 @@ public class Matriculas extends javax.swing.JInternalFrame {
     
     public Matriculas() {
         initComponents();
+        setClosable(true);
         mostrarMatriculas();
         cargarEstudiantes();
         cargarCursos();
@@ -204,6 +205,7 @@ public class Matriculas extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jtxtBuscarCedula = new javax.swing.JTextField();
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));

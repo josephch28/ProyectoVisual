@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="346e612e-7e1a-4f26-9ad2-8b33432d06ab">
+	<property name="ireport.zoom" value="2.143588810000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT 
+  e.estcedula,
+  e.estnombre,
+  e.estapellido,
+  c.curnombre
+FROM matriculas m
+JOIN estudiantes e ON TRIM(e.estcedula) = m.estudiante
+JOIN cursos c      ON c.curid = m.curso
+ORDER BY e.estapellido, e.estnombre;]]>
+	</queryString>
+	<field name="estcedula" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="estnombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="estapellido" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="curnombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="estcedula_1" class="java.lang.Integer" resetType="Column" calculation="Count">
+		<variableExpression><![CDATA[$F{estcedula}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="62" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="62" forecolor="#FF3333" backcolor="#FF3333" uuid="0a063d16-2e25-4f59-8084-8d4ac8732aa4"/>
+			</frame>
+			<staticText>
+				<reportElement x="11" y="18" width="420" height="27" forecolor="#FFFFFF" uuid="eba1a528-d605-400f-aba7-be18d1c3f5c8"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE ESTUDIANTES POR CURSO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement x="292" y="0" width="139" height="20" uuid="fb771400-d693-4275-b686-cb8083ea6b5e"/>
+				<textElement>
+					<font size="14" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de generación: ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="431" y="0" width="124" height="20" uuid="7dceabf4-cd8e-4362-86fb-7463b868fbd4"/>
+				<textElement>
+					<font size="14" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="38" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="33" uuid="90e17b17-a37e-47d1-a7e4-1595889e5c0a"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="54" y="4" width="100" height="20" uuid="24757af6-0351-4613-a4ac-8bb4ff52396a"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cédula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="4" width="100" height="20" uuid="3e8e57e1-add7-4433-8308-fdab3154c6e9"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="304" y="4" width="100" height="20" uuid="63297166-9e99-4b5a-bdbc-b2693c75449e"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="431" y="4" width="100" height="20" uuid="22d7c63a-0c31-406e-8b8d-2bf4241d35e3"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Curso]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="33">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="33" uuid="1d6f5f0b-c48a-4468-b77c-082b9f76db36"/>
+			</rectangle>
+			<textField>
+				<reportElement x="54" y="6" width="100" height="20" uuid="0f12268e-28d3-401f-8baa-09f8230e4605"/>
+				<textElement>
+					<font fontName="Arial" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estcedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="179" y="6" width="100" height="20" uuid="4d13e861-888f-4421-92fd-ae6a281cc0c4"/>
+				<textElement>
+					<font fontName="Arial" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estnombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="304" y="6" width="100" height="20" uuid="22a48b74-180b-403b-ac49-8ed7f9eaca52"/>
+				<textElement>
+					<font fontName="Arial" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estapellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="431" y="6" width="100" height="20" uuid="b448f054-bbc3-4ff8-a5c0-f8634e5b5934"/>
+				<textElement>
+					<font fontName="Arial" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{curnombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="417" y="3" width="38" height="20" uuid="84a6c41e-4e6f-4e40-b8f6-c10503ae72ee"/>
+				<textElement>
+					<font size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Página]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="455" y="3" width="100" height="20" uuid="bbf734d3-5b52-4377-8e2e-2b51429c2561"/>
+				<textElement>
+					<font size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
