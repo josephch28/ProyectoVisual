@@ -7,6 +7,7 @@ package Interfaces;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -22,44 +23,49 @@ public class Alumnos extends javax.swing.JInternalFrame {
      * Creates new form Alumnos
      */
     private static Alumnos instancia;
-    
+
     public Alumnos() {
         initComponents();
+        setClosable(true);
         mostrarEstudiantes();
         cargarCamposTabla();
         botonesInicio();
         TextosInicio();
+        agruparBotonesSexo();
     }
-    
-    public void agruparBotonesSexo(){
-        buttonGroup1.add(jrdbF);
+
+    public void agruparBotonesSexo() {
         buttonGroup1.add(jrdbM);
+        buttonGroup1.add(jrdbF);
+        jrdbM.setEnabled(false);
+        jrdbF.setEnabled(false);
+        buttonGroup1.clearSelection();
     }
-    
+
     public static Alumnos getInstancia() {
-    if (instancia == null || instancia.isClosed()) {
-        instancia = new Alumnos();
+        if (instancia == null || instancia.isClosed()) {
+            instancia = new Alumnos();
+        }
+        return instancia;
     }
-    return instancia;
-    }
-    
-    public void botonesEliminarActualizar(){
+
+    public void botonesEliminarActualizar() {
         jbtnNuevo.setEnabled(true);
         jbtnGuardar.setEnabled(false);
         jbtnEditar.setEnabled(true);
         jbtnEliminar.setEnabled(true);
         jbtnCancelar.setEnabled(true);
     }
-    
-    public void botonesInicio(){
+
+    public void botonesInicio() {
         jbtnNuevo.setEnabled(true);
         jbtnGuardar.setEnabled(false);
         jbtnEditar.setEnabled(false);
         jbtnEliminar.setEnabled(false);
         jbtnCancelar.setEnabled(true);
     }
-    
-    public void TextosInicio(){
+
+    public void TextosInicio() {
         jtxtCedula.setEnabled(false);
         jtxtNombre.setEnabled(false);
         jtxtApellido.setEnabled(false);
@@ -70,9 +76,12 @@ public class Alumnos extends javax.swing.JInternalFrame {
         jtxtApellido.setText("");
         jtxtDireccion.setText("");
         jtxtTelefono.setText("");
+        buttonGroup1.clearSelection(); // Deselecciona M y F
+        jrdbM.setEnabled(false);       // Deshabilita M
+        jrdbF.setEnabled(false);       // Deshabilita F
     }
-    
-    public void botonesNuevo(){
+
+    public void botonesNuevo() {
         jbtnNuevo.setEnabled(false);
         jbtnGuardar.setEnabled(true);
         jbtnEditar.setEnabled(false);
@@ -84,90 +93,97 @@ public class Alumnos extends javax.swing.JInternalFrame {
         jtxtDireccion.setText("");
         jtxtTelefono.setText("");
     }
-    
-    public void TextosNuevo(){
+
+    public void TextosNuevo() {
         jtxtCedula.setEnabled(true);
         jtxtNombre.setEnabled(true);
         jtxtApellido.setEnabled(true);
         jtxtDireccion.setEnabled(true);
         jtxtTelefono.setEnabled(true);
+        jrdbM.setEnabled(true);
+        jrdbF.setEnabled(true);
+        buttonGroup1.clearSelection();
     }
-    
-    
-    public void guardarEstudiante(){
-    
+
+  public void guardarEstudiante() {
     
     if (jtxtCedula.getText().isEmpty()) {
         JOptionPane.showMessageDialog(this, "La cédula es obligatoria");
         jtxtCedula.requestFocus();
         return;
-    }
-    else if (jtxtCedula.getText().length() != 10) {
+    } else if (jtxtCedula.getText().length() != 10) {
         JOptionPane.showMessageDialog(this, "La cédula debe tener exactamente 10 caracteres");
         jtxtCedula.requestFocus();
         jtxtCedula.selectAll();
         return;
     }
-    
-    
+
     if (jtxtNombre.getText().isEmpty()) {
         JOptionPane.showMessageDialog(this, "El nombre es obligatorio");
         jtxtNombre.requestFocus();
         return;
-    }
-    else if (jtxtNombre.getText().length() > 20) {
-        JOptionPane.showMessageDialog(this, 
-            "Nombre ingresado es excede los 20 caracteres ");
+    } else if (jtxtNombre.getText().length() > 20) {
+        JOptionPane.showMessageDialog(this,
+                "Nombre ingresado es excede los 20 caracteres ");
         jtxtNombre.requestFocus();
         jtxtNombre.selectAll();
         return;
     }
-    
-    
+
     if (jtxtApellido.getText().isEmpty()) {
         JOptionPane.showMessageDialog(this, "El apellido es obligatorio");
         jtxtApellido.requestFocus();
         return;
-    }
-    else if (jtxtApellido.getText().length() > 20) {
-        JOptionPane.showMessageDialog(this, 
-            "Apellido ingresado es excede los 20 caracteres ");
+    } else if (jtxtApellido.getText().length() > 20) {
+        JOptionPane.showMessageDialog(this,
+                "Apellido ingresado es excede los 20 caracteres ");
         jtxtApellido.requestFocus();
         jtxtApellido.selectAll();
         return;
     }
-    
-    
-    if ( jtxtDireccion.getText().length() > 50) {
-        JOptionPane.showMessageDialog(this, 
-            "Dirección muy larga excede los 50 caracteres  contando espacios ");
+
+    if (jtxtDireccion.getText().length() > 50) {
+        JOptionPane.showMessageDialog(this,
+                "Dirección muy larga excede los 50 caracteres  contando espacios ");
         jtxtDireccion.requestFocus();
         jtxtDireccion.selectAll();
         return;
     }
-    
-    
-    if ( jtxtTelefono.getText().length() > 10) {
-        JOptionPane.showMessageDialog(this, 
-            "Teléfono excede lo que esta en las base de datos ");
+
+    if (jtxtTelefono.getText().length() > 10) {
+        JOptionPane.showMessageDialog(this,
+                "Teléfono excede lo que esta en las base de datos ");
         jtxtTelefono.requestFocus();
         jtxtTelefono.selectAll();
         return;
     }
 
     
+    String sexo = "";
+    if (jrdbF.isSelected()) {
+        sexo = "F";
+    } else if (jrdbM.isSelected()) {
+        sexo = "M";
+    } else {
+        JOptionPane.showMessageDialog(this, "Seleccione el sexo");
+        return;
+    }
+
     Conexion cn = new Conexion();
     Connection cc = cn.conectar();
-    String SqlInsert = "INSERT INTO ESTUDIANTES VALUES(?,?,?,?,?);";
+    // MODIFICAR EL INSERT PARA INCLUIR EL SEXO (6to campo)
+    String SqlInsert = "INSERT INTO ESTUDIANTES VALUES(?,?,?,?,?,?);";
     try {
         PreparedStatement stmt = cc.prepareStatement(SqlInsert);
         stmt.setString(1, jtxtCedula.getText());
         stmt.setString(2, jtxtNombre.getText());
         stmt.setString(3, jtxtApellido.getText());
-        stmt.setString(4, (jtxtDireccion.getText().trim().isEmpty())?"Sin Dirección":jtxtDireccion.getText());
-        stmt.setString(5, (jtxtTelefono.getText().trim().isEmpty())?"S/T":jtxtTelefono.getText());
-        int n=stmt.executeUpdate();
-        if (n>0) {
+        stmt.setString(4, (jtxtDireccion.getText().trim().isEmpty()) ? "Sin Dirección" : jtxtDireccion.getText());
+        stmt.setString(5, (jtxtTelefono.getText().trim().isEmpty()) ? "S/T" : jtxtTelefono.getText());
+        stmt.setString(6, sexo);  // AQUÍ SE GUARDA EL VALOR DEL RADIO BUTTON
+        
+        int n = stmt.executeUpdate();
+        if (n > 0) {
             JOptionPane.showMessageDialog(this, "Estudiante Insertado");
             mostrarEstudiantes();
             botonesInicio();
@@ -177,12 +193,10 @@ public class Alumnos extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, ex.getMessage());
     }
 }
-    
 
-    
-    public void mostrarEstudiantes(){
-        String[] titulos = {"Cédula","Nombre","Apellido","Dirección","Teléfono","Sexo"};
-        String registros[]= new String[6];
+    public void mostrarEstudiantes() {
+        String[] titulos = {"Cédula", "Nombre", "Apellido", "Dirección", "Teléfono", "Sexo"};
+        String registros[] = new String[6];
         DefaultTableModel modelo = new DefaultTableModel(null, titulos);
         Conexion cn = new Conexion();
         Connection cc = cn.conectar();
@@ -191,12 +205,12 @@ public class Alumnos extends javax.swing.JInternalFrame {
             Statement stmt = cc.createStatement();
             ResultSet rs = stmt.executeQuery(SqlSelect);
             while (rs.next()) {
-                registros[0]=rs.getString(1);
-                registros[1]=rs.getString(2);
-                registros[2]=rs.getString(3);
-                registros[3]=rs.getString(4);
-                registros[4]=rs.getString(5);
-                registros[5]=rs.getString(6);
+                registros[0] = rs.getString(1);
+                registros[1] = rs.getString(2);
+                registros[2] = rs.getString(3);
+                registros[3] = rs.getString(4);
+                registros[4] = rs.getString(5);
+                registros[5] = rs.getString(6);
                 modelo.addRow(registros);
             }
         } catch (Exception ex) {
@@ -205,8 +219,8 @@ public class Alumnos extends javax.swing.JInternalFrame {
         jtblAlumnos.setModel(modelo);
 
     }
-       
-    public void buscarEstudiantePorCedula(String cedulaBuscar){
+
+    public void buscarEstudiantePorCedula(String cedulaBuscar) {
         String[] titulos = {"Cédula", "Nombre", "Apellido", "Dirección", "Teléfono", "Sexo"};
         String registros[] = new String[6];
         DefaultTableModel modelo = new DefaultTableModel(null, titulos);
@@ -236,144 +250,146 @@ public class Alumnos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Error al buscar: " + ex.getMessage());
         }
     }
-    
-    public void editarEstudiante(){
-    try {
-        // Primero validar que la cédula no esté vacía
-        if (jtxtCedula.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "La cédula es obligatoria para editar");
-            jtxtCedula.requestFocus();
-            return;
-        }
-        
-        Conexion cn = new Conexion();
-        Connection cc = cn.conectar();
-        
-        // 1. VERIFICAR SI LA CÉDULA EXISTE EN LA BD
-        String sqlVerificar = "SELECT COUNT(*) FROM estudiantes WHERE estcedula = ?";
-        PreparedStatement stmtVerificar = cc.prepareStatement(sqlVerificar);
-        stmtVerificar.setString(1, jtxtCedula.getText());
-        
-        ResultSet rs = stmtVerificar.executeQuery();
-        rs.next();
-        int existe = rs.getInt(1);
-        
-        // Si no existe, mostrar error y salir
-        if (existe == 0) {
-            JOptionPane.showMessageDialog(this, 
-                "La cédula " + jtxtCedula.getText() + " no existe en la base de datos\n" +
-                "No se puede editar un estudiante que no existe");
-            jtxtCedula.requestFocus();
-            
-            return;
-        }
-        
-        // 2. Si existe, proceder con la actualización
-        String SqlUpdate = "UPDATE Estudiantes SET estnombre=?, estapellido=?, estdireccion=?, esttelefono=? WHERE estcedula=?";
-        
-        PreparedStatement pdst = cc.prepareStatement(SqlUpdate);
-        pdst.setString(1, jtxtNombre.getText());
-        pdst.setString(2, jtxtApellido.getText());
-        pdst.setString(3, jtxtDireccion.getText());
-        pdst.setString(4, jtxtTelefono.getText());
-        pdst.setString(5, jtxtCedula.getText());
-        
-        int filasAfectadas = pdst.executeUpdate();
-        if(filasAfectadas > 0){
-            JOptionPane.showMessageDialog(this, "Se actualizó el Estudiante correctamente");
-            mostrarEstudiantes();   
-        } else {
-            JOptionPane.showMessageDialog(this, "No se pudo actualizar el estudiante");
-        }
-        
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Error al editar: " + ex.getMessage());
-    }
-}
-    
-    public void eliminarEstudiante(){
-    try {
-        // Primero validar que la cédula no esté vacía
-        if (jtxtCedula.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "La cédula es obligatoria para eliminar");
-            jtxtCedula.requestFocus();
-            return;
-        }
-        
-        // Verificar si el estudiante existe antes de mostrar confirmación
-        Conexion cn = new Conexion();
-        Connection cc = cn.conectar();
-        
-        // 1. VERIFICAR SI LA CÉDULA EXISTE EN LA BD
-        String sqlVerificar = "SELECT estnombre, estapellido FROM estudiantes WHERE estcedula = ?";
-        PreparedStatement stmtVerificar = cc.prepareStatement(sqlVerificar);
-        stmtVerificar.setString(1, jtxtCedula.getText());
-        
-        ResultSet rs = stmtVerificar.executeQuery();
-        
-        // Si no existe, mostrar error y salir
-        if (!rs.next()) {
-            JOptionPane.showMessageDialog(this, 
-                "Error: La cédula " + jtxtCedula.getText() + " no existe\n" +
-                "No se puede eliminar un estudiante que no está registrado");
-            jtxtCedula.requestFocus();
-            jtxtCedula.selectAll();
-            return;
-        }
-        
-        // Obtener nombre del estudiante para el mensaje de confirmación
-        String nombreEstudiante = rs.getString("estnombre") + " " + rs.getString("estapellido");
-        
-        // 2. Mostrar confirmación con el nombre del estudiante
-        if (JOptionPane.showConfirmDialog(this, 
-                "¿Está seguro de eliminar al estudiante:\n" +
-                nombreEstudiante + "\n" +
-                "Cédula: " + jtxtCedula.getText() + "?",
-                "Confirmar Eliminación",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
-            
-            // 3. Proceder con la eliminación (usando PreparedStatement seguro)
-            String SqlDelete = "DELETE FROM Estudiantes WHERE estcedula = ?";
-            PreparedStatement psd = cc.prepareStatement(SqlDelete);
-            psd.setString(1, jtxtCedula.getText());
-            
-            int n = psd.executeUpdate();
-            if (n > 0) {
-                JOptionPane.showMessageDialog(this, 
-                    "Estudiante " + nombreEstudiante + " eliminado correctamente");
-                mostrarEstudiantes();
-                
+
+    public void editarEstudiante() {
+        try {
+            // Primero validar que la cédula no esté vacía
+            if (jtxtCedula.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "La cédula es obligatoria para editar");
+                jtxtCedula.requestFocus();
+                return;
             }
+
+            Conexion cn = new Conexion();
+            Connection cc = cn.conectar();
+
+            // 1. VERIFICAR SI LA CÉDULA EXISTE EN LA BD
+            String sqlVerificar = "SELECT COUNT(*) FROM estudiantes WHERE estcedula = ?";
+            PreparedStatement stmtVerificar = cc.prepareStatement(sqlVerificar);
+            stmtVerificar.setString(1, jtxtCedula.getText());
+
+            ResultSet rs = stmtVerificar.executeQuery();
+            rs.next();
+            int existe = rs.getInt(1);
+
+            // Si no existe, mostrar error y salir
+            if (existe == 0) {
+                JOptionPane.showMessageDialog(this,
+                        "La cédula " + jtxtCedula.getText() + " no existe en la base de datos\n"
+                        + "No se puede editar un estudiante que no existe");
+                jtxtCedula.requestFocus();
+
+                return;
+            }
+
+            // 2. Si existe, proceder con la actualización
+            String SqlUpdate = "UPDATE Estudiantes SET estnombre=?, estapellido=?, estdireccion=?, esttelefono=? WHERE estcedula=?";
+
+            PreparedStatement pdst = cc.prepareStatement(SqlUpdate);
+            pdst.setString(1, jtxtNombre.getText());
+            pdst.setString(2, jtxtApellido.getText());
+            pdst.setString(3, jtxtDireccion.getText());
+            pdst.setString(4, jtxtTelefono.getText());
+            pdst.setString(5, jtxtCedula.getText());
+
+            int filasAfectadas = pdst.executeUpdate();
+            if (filasAfectadas > 0) {
+                JOptionPane.showMessageDialog(this, "Se actualizó el Estudiante correctamente");
+                mostrarEstudiantes();
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo actualizar el estudiante");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al editar: " + ex.getMessage());
         }
-        
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Error al eliminar: " + ex.getMessage());
     }
-}
-    
-    public void cargarCamposTabla(){
+
+    public void eliminarEstudiante() {
+        try {
+            // Primero validar que la cédula no esté vacía
+            if (jtxtCedula.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "La cédula es obligatoria para eliminar");
+                jtxtCedula.requestFocus();
+                return;
+            }
+
+            // Verificar si el estudiante existe antes de mostrar confirmación
+            Conexion cn = new Conexion();
+            Connection cc = cn.conectar();
+
+            // 1. VERIFICAR SI LA CÉDULA EXISTE EN LA BD
+            String sqlVerificar = "SELECT estnombre, estapellido FROM estudiantes WHERE estcedula = ?";
+            PreparedStatement stmtVerificar = cc.prepareStatement(sqlVerificar);
+            stmtVerificar.setString(1, jtxtCedula.getText());
+
+            ResultSet rs = stmtVerificar.executeQuery();
+
+            // Si no existe, mostrar error y salir
+            if (!rs.next()) {
+                JOptionPane.showMessageDialog(this,
+                        "Error: La cédula " + jtxtCedula.getText() + " no existe\n"
+                        + "No se puede eliminar un estudiante que no está registrado");
+                jtxtCedula.requestFocus();
+                jtxtCedula.selectAll();
+                return;
+            }
+
+            // Obtener nombre del estudiante para el mensaje de confirmación
+            String nombreEstudiante = rs.getString("estnombre") + " " + rs.getString("estapellido");
+
+            // 2. Mostrar confirmación con el nombre del estudiante
+            if (JOptionPane.showConfirmDialog(this,
+                    "¿Está seguro de eliminar al estudiante:\n"
+                    + nombreEstudiante + "\n"
+                    + "Cédula: " + jtxtCedula.getText() + "?",
+                    "Confirmar Eliminación",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
+
+                // 3. Proceder con la eliminación (usando PreparedStatement seguro)
+                String SqlDelete = "DELETE FROM Estudiantes WHERE estcedula = ?";
+                PreparedStatement psd = cc.prepareStatement(SqlDelete);
+                psd.setString(1, jtxtCedula.getText());
+
+                int n = psd.executeUpdate();
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(this,
+                            "Estudiante " + nombreEstudiante + " eliminado correctamente");
+                    mostrarEstudiantes();
+
+                }
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar: " + ex.getMessage());
+        }
+    }
+
+    public void cargarCamposTabla() {
         jtblAlumnos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (jtblAlumnos.getSelectedRow()!=-1) {
-                botonesEliminarActualizar();
-                TextosNuevo();
-                int fila = jtblAlumnos.getSelectedRow();
-                jtxtCedula.setText(jtblAlumnos.getValueAt(fila, 0).toString());
-                jtxtNombre.setText(jtblAlumnos.getValueAt(fila, 1).toString());
-                jtxtApellido.setText(jtblAlumnos.getValueAt(fila, 2).toString());
-                jtxtDireccion.setText(jtblAlumnos.getValueAt(fila, 3).toString());
-                jtxtTelefono.setText(jtblAlumnos.getValueAt(fila, 4).toString());
-                String sexo = jtblAlumnos.getValueAt(fila, 5).toString(); 
-                if (sexo.equalsIgnoreCase("M")) {
-                    jrdbM.setSelected(true);
+                if (jtblAlumnos.getSelectedRow() != -1) {
+                    botonesEliminarActualizar();
+                    TextosNuevo();
+                    int fila = jtblAlumnos.getSelectedRow();
+                    jtxtCedula.setText(jtblAlumnos.getValueAt(fila, 0).toString());
+                    jtxtNombre.setText(jtblAlumnos.getValueAt(fila, 1).toString());
+                    jtxtApellido.setText(jtblAlumnos.getValueAt(fila, 2).toString());
+                    jtxtDireccion.setText(jtblAlumnos.getValueAt(fila, 3).toString());
+                    jtxtTelefono.setText(jtblAlumnos.getValueAt(fila, 4).toString());
+                    String sexo = jtblAlumnos.getValueAt(fila, 5).toString();
+                    if (sexo.equalsIgnoreCase("M")) {
+                        jrdbM.setSelected(true);
                     } else {
-                    jrdbF.setSelected(true);
+                        jrdbF.setSelected(true);
                     }
                 }
-        }});
+            }
+        });
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -413,6 +429,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
 
         jFormattedTextField1.setText("jFormattedTextField1");
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -464,6 +481,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Sexo:");
 
+        buttonGroup1.add(jrdbM);
         jrdbM.setText("M");
         jrdbM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -471,6 +489,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
             }
         });
 
+        buttonGroup1.add(jrdbF);
         jrdbF.setText("F");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -681,6 +700,9 @@ public class Alumnos extends javax.swing.JInternalFrame {
         eliminarEstudiante();
         botonesInicio();
         TextosInicio();
+        jrdbM.setEnabled(false);
+        jrdbF.setEnabled(false);
+        buttonGroup1.clearSelection();
         jtblAlumnos.clearSelection();
     }//GEN-LAST:event_jbtnEliminarActionPerformed
 
@@ -688,12 +710,15 @@ public class Alumnos extends javax.swing.JInternalFrame {
         editarEstudiante();
         botonesInicio();
         TextosInicio();
+        buttonGroup1.clearSelection();
         jtblAlumnos.clearSelection();
     }//GEN-LAST:event_jbtnEditarActionPerformed
 
     private void jbtnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnNuevoActionPerformed
         botonesNuevo();
         TextosNuevo();
+        buttonGroup1.clearSelection();
+        jtblAlumnos.clearSelection();
     }//GEN-LAST:event_jbtnNuevoActionPerformed
 
     private void jtxtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtCedulaActionPerformed
@@ -702,7 +727,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
 
     private void jtxtCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtCedulaKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isDigit(c) || jtxtCedula.getText().length()==10) {
+        if (!Character.isDigit(c) || jtxtCedula.getText().length() == 10) {
             evt.consume();
         }
     }//GEN-LAST:event_jtxtCedulaKeyTyped
@@ -710,7 +735,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
     private void jtxtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtTelefonoKeyTyped
         char c = evt.getKeyChar();
         String text = jtxtTelefono.getText();
-        if (!Character.isDigit(c) || jtxtTelefono.getText().length()==10) {
+        if (!Character.isDigit(c) || jtxtTelefono.getText().length() == 10) {
             evt.consume();
         }
         if (text.length() == 0 && c != '0') {
@@ -743,6 +768,9 @@ public class Alumnos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         botonesInicio();
         TextosInicio();
+        jrdbM.setEnabled(false);
+        jrdbF.setEnabled(false);
+        buttonGroup1.clearSelection();
         jtblAlumnos.clearSelection();
     }//GEN-LAST:event_jbtnCancelarActionPerformed
 
