@@ -74,6 +74,7 @@ public class Principal extends javax.swing.JFrame {
         jmnuVentanas = new javax.swing.JMenu();
         jmntEstudiantes = new javax.swing.JMenuItem();
         jmntMatriculas = new javax.swing.JMenuItem();
+        jmntCursos = new javax.swing.JMenuItem();
         jmnuReportes = new javax.swing.JMenu();
         jmniReporteEstudiantes = new javax.swing.JMenuItem();
         jmniEstudiantexCedula = new javax.swing.JMenuItem();
@@ -111,6 +112,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jmnuVentanas.add(jmntMatriculas);
+
+        jmntCursos.setText("Cursos");
+        jmntCursos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmntCursosActionPerformed(evt);
+            }
+        });
+        jmnuVentanas.add(jmntCursos);
 
         jMenuBar1.add(jmnuVentanas);
 
@@ -268,30 +277,16 @@ public class Principal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jmntMatriculasActionPerformed
-    private void jmnuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnuSalirActionPerformed
-        
-    }//GEN-LAST:event_jmnuSalirActionPerformed
 
-    private void jmnuSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmnuSalirMouseClicked
-        int opcion = JOptionPane.showConfirmDialog(this,
-            "¿Deseas salir del sistema?",
-            "Confirmar salida",
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.QUESTION_MESSAGE);
-
-        if (opcion == JOptionPane.YES_OPTION) {
-            System.exit(0);
-        }
-    }//GEN-LAST:event_jmnuSalirMouseClicked
-
-    private void jmniAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmniAgregarUsuarioActionPerformed
-        AgregarUsuario frm = AgregarUsuario.getInstancia();
-        if (!frm.isVisible()) {
-            jdskPrincipal.add(frm);
-            frm.setVisible(true);
+    private void jmntCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmntCursosActionPerformed
+        // TODO add your handling code here:
+        Cursos frmCursos = Cursos.getInstancia();
+        if (!frmCursos.isVisible()) {
+            jdskPrincipal.add(frmCursos);
+            frmCursos.setVisible(true);
             } else {
             try {
-                frm.setSelected(true); // Lo trae al frente si ya está abierto
+                frmCursos.setSelected(true); // Lo trae al frente si ya está abierto
             } catch (java.beans.PropertyVetoException ex) {
                 ex.printStackTrace();
             }
@@ -388,6 +383,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmniAgregarUsuario;
     private javax.swing.JMenuItem jmniEstudiantexCedula;
     private javax.swing.JMenuItem jmniReporteEstudiantes;
+    private javax.swing.JMenuItem jmntCursos;
     private javax.swing.JMenuItem jmntEstudiantes;
     private javax.swing.JMenuItem jmntMatriculas;
     private javax.swing.JMenu jmnuReportes;
