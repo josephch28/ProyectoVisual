@@ -9,5 +9,7 @@ package Interfaces;
  * @author andre
  */
 public class Paredes {
-    
+    public static void main(String[] args) {
+        System.out.println("hola mundo");
+    }
 }
