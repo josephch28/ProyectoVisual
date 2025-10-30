@@ -26,6 +26,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
 
     public Alumnos() {
         initComponents();
+        setClosable(true);
         mostrarEstudiantes();
         cargarCamposTabla();
         botonesInicio();
@@ -428,6 +429,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
 
         jFormattedTextField1.setText("jFormattedTextField1");
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
