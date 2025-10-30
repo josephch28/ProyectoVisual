@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -42,7 +43,8 @@ public class Principal extends javax.swing.JFrame {
     
     public void aplicarPermisosRol(){
         if ("secretaria".equalsIgnoreCase(this.rol)) {
-            jmnuReportes.setEnabled(false);
+            jmnuVentanas.setEnabled(false);
+            jmnuUsuarios.setEnabled(false);
         }
     }
     
@@ -67,6 +69,8 @@ public class Principal extends javax.swing.JFrame {
         jmnuReportes = new javax.swing.JMenu();
         jmniReporteEstudiantes = new javax.swing.JMenuItem();
         jmniEstudiantexCedula = new javax.swing.JMenuItem();
+        jmnuUsuarios = new javax.swing.JMenu();
+        jmniAgregarUsuario = new javax.swing.JMenuItem();
         jmnuSalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -122,7 +126,29 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jmnuReportes);
 
+        jmnuUsuarios.setText("Usuarios");
+
+        jmniAgregarUsuario.setText("Agregar Usuario");
+        jmniAgregarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmniAgregarUsuarioActionPerformed(evt);
+            }
+        });
+        jmnuUsuarios.add(jmniAgregarUsuario);
+
+        jMenuBar1.add(jmnuUsuarios);
+
         jmnuSalir.setText("Salir");
+        jmnuSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jmnuSalirMouseClicked(evt);
+            }
+        });
+        jmnuSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnuSalirActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jmnuSalir);
 
         setJMenuBar(jMenuBar1);
@@ -188,6 +214,36 @@ public class Principal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jmntMatriculasActionPerformed
+
+    private void jmnuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnuSalirActionPerformed
+        
+    }//GEN-LAST:event_jmnuSalirActionPerformed
+
+    private void jmnuSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmnuSalirMouseClicked
+        int opcion = JOptionPane.showConfirmDialog(this,
+            "¿Deseas salir del sistema?",
+            "Confirmar salida",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE);
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_jmnuSalirMouseClicked
+
+    private void jmniAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmniAgregarUsuarioActionPerformed
+        AgregarUsuario frm = AgregarUsuario.getInstancia();
+        if (!frm.isVisible()) {
+            jdskPrincipal.add(frm);
+            frm.setVisible(true);
+            } else {
+            try {
+                frm.setSelected(true); // Lo trae al frente si ya está abierto
+            } catch (java.beans.PropertyVetoException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jmniAgregarUsuarioActionPerformed
         private void abrirReporteBarras() {
         // Si ya está abierto, lo traemos al frente
         JInternalFrame abierto = buscarFrameAbierto(ReporteBarras.class);
@@ -255,12 +311,14 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JDesktopPane jdskPrincipal;
+    private javax.swing.JMenuItem jmniAgregarUsuario;
     private javax.swing.JMenuItem jmniEstudiantexCedula;
     private javax.swing.JMenuItem jmniReporteEstudiantes;
     private javax.swing.JMenuItem jmntEstudiantes;
     private javax.swing.JMenuItem jmntMatriculas;
     private javax.swing.JMenu jmnuReportes;
     private javax.swing.JMenu jmnuSalir;
+    private javax.swing.JMenu jmnuUsuarios;
     private javax.swing.JMenu jmnuVentanas;
     // End of variables declaration//GEN-END:variables
     private javax.swing.JMenuItem jmniReporteBarras;
