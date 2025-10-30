@@ -97,6 +97,8 @@ public class Principal extends javax.swing.JFrame {
 
         jmnuVentanas.setText("Ventanas");
 
+        jmntEstudiantes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmntEstudiantes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/graduado.png"))); // NOI18N
         jmntEstudiantes.setText("Estudiantes");
         jmntEstudiantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,6 +107,8 @@ public class Principal extends javax.swing.JFrame {
         });
         jmnuVentanas.add(jmntEstudiantes);
 
+        jmntMatriculas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmntMatriculas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/matricula.png"))); // NOI18N
         jmntMatriculas.setText("Matriculas");
         jmntMatriculas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
