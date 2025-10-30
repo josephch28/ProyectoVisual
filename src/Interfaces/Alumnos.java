@@ -156,6 +156,36 @@ public class Alumnos extends javax.swing.JInternalFrame {
         jtblAlumnos.setModel(modelo);
 
     }
+       public void buscarEstudiantePorCedula(String cedulaBuscar){
+        String[] titulos = {"Cédula", "Nombre", "Apellido", "Dirección", "Teléfono", "Sexo"};
+        String registros[] = new String[6];
+        DefaultTableModel modelo = new DefaultTableModel(null, titulos);
+        Conexion cn = new Conexion();
+        Connection cc = cn.conectar();
+
+        String SqlSelect = "SELECT * FROM ESTUDIANTES WHERE estcedula LIKE ?";
+
+        try {
+            PreparedStatement ps = cc.prepareStatement(SqlSelect);
+            ps.setString(1, "%" + cedulaBuscar + "%");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                registros[0] = rs.getString(1);
+                registros[1] = rs.getString(2);
+                registros[2] = rs.getString(3);
+                registros[3] = rs.getString(4);
+                registros[4] = rs.getString(5);
+                registros[5] = rs.getString(6);
+                modelo.addRow(registros);
+            }
+
+            jtblAlumnos.setModel(modelo);
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al buscar: " + ex.getMessage());
+        }
+    }
     
     public void editarEstudiante(){
         try {
@@ -253,6 +283,8 @@ public class Alumnos extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtblAlumnos = new javax.swing.JTable();
+        jtxtBuscarCedula = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         jFormattedTextField1.setText("jFormattedTextField1");
 
@@ -455,19 +487,40 @@ public class Alumnos extends javax.swing.JInternalFrame {
 
         jScrollPane1.setViewportView(jtblAlumnos);
 
+        jtxtBuscarCedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtxtBuscarCedulaKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxtBuscarCedulaKeyTyped(evt);
+            }
+        });
+
+        jLabel7.setText("Buscar por Cédula:");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtxtBuscarCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 41, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtBuscarCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -572,6 +625,13 @@ public class Alumnos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jrdbMActionPerformed
 
+    private void jtxtBuscarCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBuscarCedulaKeyTyped
+    }//GEN-LAST:event_jtxtBuscarCedulaKeyTyped
+
+    private void jtxtBuscarCedulaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBuscarCedulaKeyReleased
+        buscarEstudiantePorCedula(jtxtBuscarCedula.getText());
+    }//GEN-LAST:event_jtxtBuscarCedulaKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -616,6 +676,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -629,6 +690,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton jrdbM;
     private javax.swing.JTable jtblAlumnos;
     private javax.swing.JTextField jtxtApellido;
+    private javax.swing.JTextField jtxtBuscarCedula;
     private javax.swing.JTextField jtxtCedula;
     private javax.swing.JTextField jtxtDireccion;
     private javax.swing.JTextField jtxtNombre;
