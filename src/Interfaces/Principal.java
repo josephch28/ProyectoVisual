@@ -35,9 +35,13 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(this.MAXIMIZED_BOTH);
         aplicarPermisosRol();
-        jmniReporteBarras = new javax.swing.JMenuItem("Gráfico de barras (JFreeChart)");
+        jmniReporteBarras = new javax.swing.JMenuItem("Gráfico de barras de comparraciones de curso");
         jmniReporteBarras.addActionListener(evt -> abrirReporteBarras());
         jmnuReportes.add(jmniReporteBarras);
+        jmniBarrasGeneroPorCurso = new javax.swing.JMenuItem("Gráfico de Barras del Género por Curso");
+        jmniBarrasGeneroPorCurso.addActionListener(evt -> abrirBarrasGeneroPorCurso());
+        jmnuReportes.add(jmniBarrasGeneroPorCurso);
+
     }
     
     public void aplicarPermisosRol(){
@@ -215,6 +219,18 @@ public class Principal extends javax.swing.JFrame {
         }
         return null;
     }
+            private void abrirBarrasGeneroPorCurso() {
+    JInternalFrame abierto = buscarFrameAbierto(BarrasGeneroPorCurso.class);
+    if (abierto != null) {
+        try { abierto.setSelected(true); abierto.toFront(); } catch (Exception ignored) {}
+        return;
+    }
+    BarrasGeneroPorCurso r = new BarrasGeneroPorCurso();
+    jdskPrincipal.add(r);
+    r.setVisible(true);
+    try { r.setSelected(true); } catch (Exception ignored) {}
+}
+
 
     
     /**
@@ -264,4 +280,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jmnuVentanas;
     // End of variables declaration//GEN-END:variables
     private javax.swing.JMenuItem jmniReporteBarras;
+    private javax.swing.JMenuItem jmniBarrasGeneroPorCurso;
+
 }
