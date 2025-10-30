@@ -6,8 +6,8 @@ package Interfaces;
 
 /**
  *
- * @author USER
+ * @author andre
  */
-public class JIRON {
-    /* SOY YO MISMO JIRON
+public class Paredes {
+    
 }

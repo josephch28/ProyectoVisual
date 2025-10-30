@@ -6,8 +6,8 @@ package Interfaces;
 
 /**
  *
- * @author USER
+ * @author ASUS ROG G14
  */
-public class JIRON {
-    /* SOY YO MISMO JIRON
+public class Vinces {
+    
 }

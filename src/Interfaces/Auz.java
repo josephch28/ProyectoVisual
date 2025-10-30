@@ -6,8 +6,8 @@ package Interfaces;
 
 /**
  *
- * @author USER
+ * @author Mateo Auz
  */
-public class JIRON {
-    /* SOY YO MISMO JIRON
+public class Auz {
+    
 }
