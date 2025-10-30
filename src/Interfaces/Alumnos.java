@@ -112,7 +112,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
     }
     else if (jtxtNombre.getText().length() > 20) {
         JOptionPane.showMessageDialog(this, 
-            "Nombre muy largo: " + jtxtNombre.getText().length() + "/20 caracteres");
+            "Nombre ingresado es excede los 20 caracteres ");
         jtxtNombre.requestFocus();
         jtxtNombre.selectAll();
         return;
@@ -126,25 +126,25 @@ public class Alumnos extends javax.swing.JInternalFrame {
     }
     else if (jtxtApellido.getText().length() > 20) {
         JOptionPane.showMessageDialog(this, 
-            "Apellido muy largo: " + jtxtApellido.getText().length() + "/20 caracteres");
+            "Apellido ingresado es excede los 20 caracteres ");
         jtxtApellido.requestFocus();
         jtxtApellido.selectAll();
         return;
     }
     
     
-    if (!jtxtDireccion.getText().isEmpty() && jtxtDireccion.getText().length() > 50) {
+    if ( jtxtDireccion.getText().length() > 50) {
         JOptionPane.showMessageDialog(this, 
-            "Dirección muy larga: " + jtxtDireccion.getText().length() + "/100 caracteres");
+            "Dirección muy larga excede los 50 caracteres  contando espacios ");
         jtxtDireccion.requestFocus();
         jtxtDireccion.selectAll();
         return;
     }
     
     
-    if (!jtxtTelefono.getText().isEmpty() && jtxtTelefono.getText().length() > 10) {
+    if ( jtxtTelefono.getText().length() > 10) {
         JOptionPane.showMessageDialog(this, 
-            "Teléfono muy largo: " + jtxtTelefono.getText().length() + "/15 caracteres");
+            "Teléfono excede lo qe esta en las base de datos ");
         jtxtTelefono.requestFocus();
         jtxtTelefono.selectAll();
         return;
