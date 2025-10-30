@@ -25,6 +25,8 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         escalarIconoExistente();
+        configurarCampos();
+        getRootPane().setDefaultButton(btnLogin);
     }
     private void escalarIconoExistente() {
         // Obtiene el ImageIcon actual
@@ -45,6 +47,48 @@ public class Login extends javax.swing.JFrame {
             lblImagen.setIcon(new ImageIcon(imagenEscalada));
         }
     }
+    
+    private void configurarCampos() {
+    // --- Campo Usuario ---
+    txtUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
+        @Override
+        public void focusGained(java.awt.event.FocusEvent evt) {
+            if (txtUsuario.getText().equals("Usuario")) {
+                txtUsuario.setText("");
+                txtUsuario.setForeground(new java.awt.Color(0, 0, 0)); // texto negro
+            }
+        }
+
+        @Override
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            if (txtUsuario.getText().trim().isEmpty()) {
+                txtUsuario.setText("Usuario");
+                txtUsuario.setForeground(new java.awt.Color(102, 102, 102)); // gris
+            }
+        }
+    });
+
+    // --- Campo Password ---
+    txtPassword.addFocusListener(new java.awt.event.FocusAdapter() {
+        @Override
+        public void focusGained(java.awt.event.FocusEvent evt) {
+            String contrasena = new String(txtPassword.getPassword());
+            if (contrasena.equals("*******")) {
+                txtPassword.setText("");
+                txtPassword.setForeground(new java.awt.Color(0, 0, 0));
+            }
+        }
+
+        @Override
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            String contrasena = new String(txtPassword.getPassword());
+            if (contrasena.trim().isEmpty()) {
+                txtPassword.setText("*******");
+                txtPassword.setForeground(new java.awt.Color(102, 102, 102));
+            }
+        }
+    });
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,9 +107,6 @@ public class Login extends javax.swing.JFrame {
         lblImagen = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jbtnmSalir = new javax.swing.JMenu();
-        btnAgregarUsuario = new javax.swing.JMenu();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -79,8 +120,8 @@ public class Login extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        txtUsuario.setBackground(new java.awt.Color(255, 255, 255));
         txtUsuario.setForeground(new java.awt.Color(102, 102, 102));
         txtUsuario.setText("Usuario");
         txtUsuario.setDisabledTextColor(new java.awt.Color(153, 153, 153));
@@ -90,7 +131,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        txtPassword.setBackground(new java.awt.Color(255, 255, 255));
         txtPassword.setForeground(new java.awt.Color(102, 102, 102));
         txtPassword.setText("*******");
 
@@ -156,41 +196,22 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(jdckPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43))
         );
-
-        jbtnmSalir.setText("Salir");
-        jbtnmSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnmSalirActionPerformed(evt);
-            }
-        });
-        jMenuBar1.add(jbtnmSalir);
-
-        btnAgregarUsuario.setText("Agregar Usuario");
-        btnAgregarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAgregarUsuarioMouseClicked(evt);
-            }
-        });
-        jMenuBar1.add(btnAgregarUsuario);
-
-        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jdckPrincipal)
+            .addComponent(jdckPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jdckPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jdckPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -224,11 +245,6 @@ public class Login extends javax.swing.JFrame {
     return rol;
 }
     
-    private void jbtnmSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnmSalirActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_jbtnmSalirActionPerformed
-
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsuarioActionPerformed
@@ -252,17 +268,6 @@ public class Login extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.");
     }        // TODO add your handling code here:
     }//GEN-LAST:event_btnLoginActionPerformed
-
-    private void btnAgregarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarUsuarioMouseClicked
-    //AgregarUsuario ventana = AgregarUsuario.getInstancia();
-
-//    if (!ventana.isVisible()) {
-//        ventana.setVisible(true);
-//    } else {
-//        ventana.toFront();      // Traerla al frente
-//        ventana.requestFocus(); // Darle el foco
-//    }
-    }//GEN-LAST:event_btnAgregarUsuarioMouseClicked
 
     /**
      * @param args the command line arguments
@@ -301,13 +306,10 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu btnAgregarUsuario;
     private javax.swing.JButton btnLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JMenu jbtnmSalir;
     private javax.swing.JDesktopPane jdckPrincipal;
     private javax.swing.JLabel lblImagen;
     private javax.swing.JPasswordField txtPassword;

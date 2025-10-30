@@ -4,7 +4,9 @@
  */
 package Interfaces;
 import java.sql.*;
+import javax.swing.JMenuItem;
 import java.awt.Component;
+import Interfaces.ReporteBarras;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +17,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
+
 
 /**
  *
@@ -32,10 +35,13 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(this.MAXIMIZED_BOTH);
         aplicarPermisosRol();
+        jmniReporteBarras = new javax.swing.JMenuItem("Gráfico de barras (JFreeChart)");
+        jmniReporteBarras.addActionListener(evt -> abrirReporteBarras());
+        jmnuReportes.add(jmniReporteBarras);
     }
     
     public void aplicarPermisosRol(){
-        if (this.rol=="secretaria") {
+        if ("secretaria".equalsIgnoreCase(this.rol)) {
             jmnuReportes.setEnabled(false);
         }
     }
@@ -57,6 +63,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jmnuVentanas = new javax.swing.JMenu();
         jmntEstudiantes = new javax.swing.JMenuItem();
+        jmntMatriculas = new javax.swing.JMenuItem();
         jmnuReportes = new javax.swing.JMenu();
         jmniReporteEstudiantes = new javax.swing.JMenuItem();
         jmniEstudiantexCedula = new javax.swing.JMenuItem();
@@ -84,6 +91,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jmnuVentanas.add(jmntEstudiantes);
+
+        jmntMatriculas.setText("Matriculas");
+        jmntMatriculas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmntMatriculasActionPerformed(evt);
+            }
+        });
+        jmnuVentanas.add(jmntMatriculas);
 
         jMenuBar1.add(jmnuVentanas);
 
@@ -160,6 +175,48 @@ public class Principal extends javax.swing.JFrame {
         r1.setVisible(true);
     }//GEN-LAST:event_jmniEstudiantexCedulaActionPerformed
 
+    private void jmntMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmntMatriculasActionPerformed
+        Matriculas frm = Matriculas.getInstancia();
+        if (!frm.isVisible()) {
+            jdskPrincipal.add(frm);
+            frm.setVisible(true);
+            } else {
+            try {
+                frm.setSelected(true); // Lo trae al frente si ya está abierto
+            } catch (java.beans.PropertyVetoException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jmntMatriculasActionPerformed
+        private void abrirReporteBarras() {
+        // Si ya está abierto, lo traemos al frente
+        JInternalFrame abierto = buscarFrameAbierto(ReporteBarras.class);
+        if (abierto != null) {
+            try {
+                abierto.setSelected(true);
+                abierto.toFront();
+            } catch (Exception ignored) {}
+            return;
+        }
+
+        // Si no está abierto, lo creamos y agregamos
+        ReporteBarras r = new ReporteBarras();  // tu clase existente, sin tocarla
+        jdskPrincipal.add(r);
+        r.setVisible(true);
+        try {
+            r.setSelected(true);
+        } catch (Exception ignored) {}
+    }
+            private JInternalFrame buscarFrameAbierto(Class<? extends JInternalFrame> tipo) {
+        for (JInternalFrame f : jdskPrincipal.getAllFrames()) {
+            if (tipo.isInstance(f)) {
+                return f;
+            }
+        }
+        return null;
+    }
+
+    
     /**
      * @param args the command line arguments
      */
@@ -201,8 +258,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmniEstudiantexCedula;
     private javax.swing.JMenuItem jmniReporteEstudiantes;
     private javax.swing.JMenuItem jmntEstudiantes;
+    private javax.swing.JMenuItem jmntMatriculas;
     private javax.swing.JMenu jmnuReportes;
     private javax.swing.JMenu jmnuSalir;
     private javax.swing.JMenu jmnuVentanas;
     // End of variables declaration//GEN-END:variables
+    private javax.swing.JMenuItem jmniReporteBarras;
 }
