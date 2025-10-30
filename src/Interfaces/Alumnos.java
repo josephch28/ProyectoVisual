@@ -479,7 +479,6 @@ public class Alumnos extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Sexo:");
 
-        jrdbM.setModel(M);
         buttonGroup1.add(jrdbM);
         jrdbM.setText("M");
         jrdbM.addActionListener(new java.awt.event.ActionListener() {
@@ -488,7 +487,6 @@ public class Alumnos extends javax.swing.JInternalFrame {
             }
         });
 
-        jrdbF.setModel(F);
         buttonGroup1.add(jrdbF);
         jrdbF.setText("F");
 
