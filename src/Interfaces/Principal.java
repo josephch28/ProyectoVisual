@@ -126,6 +126,8 @@ public class Principal extends javax.swing.JFrame {
         });
         jmnuVentanas.add(jmntMatriculas);
 
+        jmntCursos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmntCursos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/curso-online.png"))); // NOI18N
         jmntCursos.setText("Cursos");
         jmntCursos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
