@@ -34,6 +34,12 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmniReporteEstudiantes">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+R"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagenes/informe.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Reporte Estudiantes"/>
               </Properties>
               <Events>
@@ -42,6 +48,12 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmniEstudiantexCedula">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+I"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagenes/cedula-de-identidad-con-foto-de-mujer.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Estudiante por Cedula"/>
               </Properties>
               <Events>
@@ -57,6 +69,12 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmniAgregarUsuario">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+A"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagenes/estudiante.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Agregar Usuario"/>
               </Properties>
               <Events>
@@ -100,7 +118,11 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jdskPrincipal" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jdskPrincipal" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -115,7 +137,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="400" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="388" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">

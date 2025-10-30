@@ -87,7 +87,7 @@ public class Principal extends javax.swing.JFrame {
         jdskPrincipal.setLayout(jdskPrincipalLayout);
         jdskPrincipalLayout.setHorizontalGroup(
             jdskPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 388, Short.MAX_VALUE)
         );
         jdskPrincipalLayout.setVerticalGroup(
             jdskPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,6 +116,8 @@ public class Principal extends javax.swing.JFrame {
 
         jmnuReportes.setText("Reportes");
 
+        jmniReporteEstudiantes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmniReporteEstudiantes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/informe.png"))); // NOI18N
         jmniReporteEstudiantes.setText("Reporte Estudiantes");
         jmniReporteEstudiantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,6 +126,8 @@ public class Principal extends javax.swing.JFrame {
         });
         jmnuReportes.add(jmniReporteEstudiantes);
 
+        jmniEstudiantexCedula.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmniEstudiantexCedula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cedula-de-identidad-con-foto-de-mujer.png"))); // NOI18N
         jmniEstudiantexCedula.setText("Estudiante por Cedula");
         jmniEstudiantexCedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,6 +140,8 @@ public class Principal extends javax.swing.JFrame {
 
         jmnuUsuarios.setText("Usuarios");
 
+        jmniAgregarUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmniAgregarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/estudiante.png"))); // NOI18N
         jmniAgregarUsuario.setText("Agregar Usuario");
         jmniAgregarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,7 +171,10 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jdskPrincipal)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jdskPrincipal)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
