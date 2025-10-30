@@ -64,6 +64,7 @@ public class Principal extends javax.swing.JFrame {
         jmnuVentanas = new javax.swing.JMenu();
         jmntEstudiantes = new javax.swing.JMenuItem();
         jmntMatriculas = new javax.swing.JMenuItem();
+        jmntCursos = new javax.swing.JMenuItem();
         jmnuReportes = new javax.swing.JMenu();
         jmniReporteEstudiantes = new javax.swing.JMenuItem();
         jmniEstudiantexCedula = new javax.swing.JMenuItem();
@@ -99,6 +100,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jmnuVentanas.add(jmntMatriculas);
+
+        jmntCursos.setText("Cursos");
+        jmntCursos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmntCursosActionPerformed(evt);
+            }
+        });
+        jmnuVentanas.add(jmntCursos);
 
         jMenuBar1.add(jmnuVentanas);
 
@@ -188,6 +197,22 @@ public class Principal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jmntMatriculasActionPerformed
+
+    private void jmntCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmntCursosActionPerformed
+        // TODO add your handling code here:
+        Cursos frmCursos = Cursos.getInstancia();
+        if (!frmCursos.isVisible()) {
+            jdskPrincipal.add(frmCursos);
+            frmCursos.setVisible(true);
+            } else {
+            try {
+                frmCursos.setSelected(true); // Lo trae al frente si ya está abierto
+            } catch (java.beans.PropertyVetoException ex) {
+                ex.printStackTrace();
+            }
+        }
+        
+    }//GEN-LAST:event_jmntCursosActionPerformed
         private void abrirReporteBarras() {
         // Si ya está abierto, lo traemos al frente
         JInternalFrame abierto = buscarFrameAbierto(ReporteBarras.class);
@@ -257,6 +282,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jdskPrincipal;
     private javax.swing.JMenuItem jmniEstudiantexCedula;
     private javax.swing.JMenuItem jmniReporteEstudiantes;
+    private javax.swing.JMenuItem jmntCursos;
     private javax.swing.JMenuItem jmntEstudiantes;
     private javax.swing.JMenuItem jmntMatriculas;
     private javax.swing.JMenu jmnuReportes;
