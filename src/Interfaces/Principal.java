@@ -277,6 +277,27 @@ public class Principal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jmntMatriculasActionPerformed
+     private void jmnuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnuSalirActionPerformed
+        
+    }//GEN-LAST:event_jmnuSalirActionPerformed
+
+    private void jmnuSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmnuSalirMouseClicked
+        int opcion = JOptionPane.showConfirmDialog(this,
+            "¿Deseas salir del sistema?",
+            "Confirmar salida",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE);
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_jmnuSalirMouseClicked
+
+    private void jmniAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmniAgregarUsuarioActionPerformed
+        AgregarUsuario frm = AgregarUsuario.getInstancia();
+        if (!frm.isVisible()) {
+            jdskPrincipal.add(frm);
+            frm.setVisible(true);
 
     private void jmntCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmntCursosActionPerformed
         // TODO add your handling code here:
