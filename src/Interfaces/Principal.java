@@ -293,13 +293,15 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jmnuSalirMouseClicked
 
-    private void jmniAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmniAgregarUsuarioActionPerformed
+    private void jmniAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         AgregarUsuario frm = AgregarUsuario.getInstancia();
         if (!frm.isVisible()) {
             jdskPrincipal.add(frm);
             frm.setVisible(true);
+        }
+    }
 
-    private void jmntCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmntCursosActionPerformed
+    private void jmntCursosActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // TODO add your handling code here:
         Cursos frmCursos = Cursos.getInstancia();
         if (!frmCursos.isVisible()) {
@@ -312,7 +314,7 @@ public class Principal extends javax.swing.JFrame {
                 ex.printStackTrace();
             }
         }
-    }//GEN-LAST:event_jmniAgregarUsuarioActionPerformed
+    }                                                  
         private void abrirReporteBarras() {
         // Si ya está abierto, lo traemos al frente
         JInternalFrame abierto = buscarFrameAbierto(ReporteBarras.class);
