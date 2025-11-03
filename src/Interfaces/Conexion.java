@@ -17,7 +17,7 @@ public class Conexion {
     public Connection conectar(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conectar = DriverManager.getConnection("jdbc:mysql://127.0.0.1/cuartouta","root","");
+            conectar = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3307/cuartouta","root","");
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());

@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class Login extends javax.swing.JFrame {
 
-    /**
+    /** 
      * Creates new form Principal
      */
     public Login() {
