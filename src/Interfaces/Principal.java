@@ -235,9 +235,17 @@ public class Principal extends javax.swing.JFrame {
                         + "Compila primero el archivo .jrxml en JasperSoft Studio.");
                 return;
             }
-
+            
+            Map<String, Object> parametros = new HashMap<>();
+            InputStream logo = getClass().getResourceAsStream("/imagenes/Reporte.png");
+            if (logo == null) {
+                JOptionPane.showMessageDialog(this, "No se encontró /imagenes/Reporte.png en el classpath.");
+                return;
+            }
+            parametros.put("LOGO", logo);
+            
             JasperReport reporte = (JasperReport) JRLoader.loadObject(archivo);
-            JasperPrint imprimir = JasperFillManager.fillReport(reporte, null, cn);
+            JasperPrint imprimir = JasperFillManager.fillReport(reporte, parametros, cn);
 
             // CREAR UN JINTERNALFRAME PARA MOSTRAR EL REPORTE DENTRO
             JInternalFrame iframe = new JInternalFrame("Reporte de Estudiantes", true, true, true, true);
@@ -259,6 +267,7 @@ public class Principal extends javax.swing.JFrame {
             }
 
             archivo.close();
+            logo.close();
             cn.close();
 
         } catch (Exception ex) {

@@ -4,6 +4,7 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="cedula" class="java.lang.String"/>
+	<parameter name="LOGO" class="java.io.InputStream"/>
 	<queryString>
 		<![CDATA[SELECT 
     e.estcedula,
@@ -50,6 +51,10 @@ WHERE
 		<band height="67" splitType="Stretch">
 			<frame>
 				<reportElement mode="Opaque" x="0" y="0" width="555" height="67" forecolor="#FF3333" backcolor="#FF3333" uuid="13a9a572-32d4-4c78-a42b-b25e07acf06f"/>
+				<image>
+					<reportElement x="455" y="10" width="48" height="46" uuid="0b97665d-1306-4403-8758-80a47b2c66e0"/>
+					<imageExpression><![CDATA[$P{LOGO}]]></imageExpression>
+				</image>
 			</frame>
 			<staticText>
 				<reportElement mode="Transparent" x="15" y="21" width="367" height="25" forecolor="#FFFFFF" uuid="eed6ea1c-3f5c-4300-a701-4561746f2fc9"/>

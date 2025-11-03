@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="346e612e-7e1a-4f26-9ad2-8b33432d06ab">
 	<property name="ireport.zoom" value="2.143588810000002"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="12"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="LOGO" class="java.io.InputStream"/>
 	<queryString>
 		<![CDATA[SELECT 
   e.estcedula,
@@ -36,6 +37,10 @@ ORDER BY e.estapellido, e.estnombre;]]>
 		<band height="62" splitType="Stretch">
 			<frame>
 				<reportElement mode="Opaque" x="0" y="0" width="555" height="62" forecolor="#FF3333" backcolor="#FF3333" uuid="0a063d16-2e25-4f59-8084-8d4ac8732aa4"/>
+				<image>
+					<reportElement x="472" y="12" width="42" height="33" uuid="c7471716-48b2-4ad8-a6f0-3f139ba1ed2c"/>
+					<imageExpression><![CDATA[$P{LOGO}]]></imageExpression>
+				</image>
 			</frame>
 			<staticText>
 				<reportElement x="11" y="18" width="420" height="27" forecolor="#FFFFFF" uuid="eba1a528-d605-400f-aba7-be18d1c3f5c8"/>
