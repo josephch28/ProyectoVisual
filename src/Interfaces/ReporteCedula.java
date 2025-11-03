@@ -105,10 +105,16 @@ public class ReporteCedula extends javax.swing.JInternalFrame {
             // Crear parámetros
             Map<String, Object> parametros = new HashMap<>();
             parametros.put("cedula", cedula);
+            InputStream logo = getClass().getResourceAsStream("/imagenes/Reporte.png");
+            if (logo == null) {
+                JOptionPane.showMessageDialog(this, "No se encontró /imagenes/Reporte.png en el classpath.");
+                return;
+            }
+            parametros.put("LOGO", logo);
 
             // Cargar el archivo .jasper YA COMPILADO
             InputStream archivo = getClass().getResourceAsStream("/Reportes/report1.jasper");
-
+                
             if (archivo == null) {
                 JOptionPane.showMessageDialog(this, "No se encuentra el archivo del reporte (.jasper)");
                 return;
@@ -120,6 +126,7 @@ public class ReporteCedula extends javax.swing.JInternalFrame {
 
             // Cerrar recursos
             archivo.close();
+            logo.close();
             cn.close();
 
             // VERIFICAR SI HAY DATOS
